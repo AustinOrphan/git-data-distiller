@@ -1,0 +1,49 @@
+# Custom AI Prompt Template
+
+## Repository: {{ data.repository.full_name }}
+
+**Description:** {{ data.repository.description or "No description" }}
+**Language:** {{ data.repository.languages | extract_language }}
+**Stars:** {{ data.repository.stargazers_count }}
+**Last Updated:** {{ data.repository.updated_at | format_datetime }}
+
+---
+
+## Context Summary
+
+{% if data.pull_requests %}
+### Pull Requests ({{ data.pull_requests | length }})
+{% for pr in data.pull_requests[:3] %}
+**PR #{{ pr.number }}**: {{ pr.title }}
+- **Status**: {{ pr.state }}{% if pr.draft %} (Draft){% endif %}
+- **Author**: {{ pr.user.login }}
+- **Changes**: +{{ pr.additions }}/-{{ pr.deletions }} in {{ pr.changed_files }} files
+- **Description**: {{ pr.body | truncate_text(200) if pr.body else "No description" }}
+
+{% endfor %}
+{% endif %}
+
+{% if data.issues %}
+### Issues ({{ data.issues | length }})
+{% for issue in data.issues[:3] %}
+**Issue #{{ issue.number }}**: {{ issue.title }}
+- **Status**: {{ issue.state }}
+- **Reporter**: {{ issue.user.login }}
+- **Labels**: {% for label in issue.labels %}{{ label.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+- **Description**: {{ issue.body | truncate_text(200) if issue.body else "No description" }}
+
+{% endfor %}
+{% endif %}
+
+---
+
+## AI Instructions
+
+Based on the above context, please:
+
+1. **Analyze** the current state of the repository
+2. **Identify** key areas that need attention
+3. **Suggest** improvements or next steps
+4. **Provide** specific, actionable recommendations
+
+Focus on code quality, maintainability, and project health indicators.

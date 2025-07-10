@@ -1,0 +1,50 @@
+# Git Data Distiller Configuration Example
+
+# GitHub API Configuration
+# SECURITY WARNING: Never commit your actual token to version control!
+# Option 1: Set the GITHUB_TOKEN environment variable
+# Option 2: Add your token to git-distiller.yaml (which should be in .gitignore)
+github_token: "YOUR_GITHUB_TOKEN_HERE"  # Replace with your actual token or use env var
+github_base_url: "https://api.github.com"  # Use GitHub Enterprise URL if needed
+
+# Output Formatting
+output:
+  max_file_size: 10000      # Maximum file size to include in output (bytes)
+  max_comments: 20          # Maximum number of comments to include
+  max_commits: 10           # Maximum number of commits to include
+  truncate_length: 1000     # Default text truncation length
+  include_patches: false    # Include code patches in output
+  include_file_contents: false  # Include full file contents
+
+# Data Extraction
+extraction:
+  max_issues: 50           # Maximum number of issues to extract
+  max_prs: 20              # Maximum number of pull requests to extract
+  include_closed: true     # Include closed issues/PRs
+  include_comments: true   # Include comments in extraction
+  include_commits: true    # Include commit information
+  include_files: true      # Include file change information
+  recent_days: 30          # Default number of days for recent activity
+
+# Caching
+cache:
+  enabled: true            # Enable caching
+  ttl_seconds: 3600        # Cache time-to-live in seconds (1 hour)
+  cache_dir: ".git-distiller-cache"  # Cache directory
+  max_size_mb: 100         # Maximum cache size in MB
+
+# Custom Templates
+templates:
+  template_dir: null       # Custom template directory
+  custom_templates: {}     # Custom template mappings
+
+# Logging
+log_level: "INFO"          # Logging level (DEBUG, INFO, WARNING, ERROR)
+log_file: null             # Log file path (null for console only)
+
+# Rate Limiting
+respect_rate_limits: true  # Respect GitHub rate limits
+requests_per_second: 10.0  # Maximum requests per second
+
+# Custom Settings
+custom_settings: {}        # Add your custom settings here
